@@ -1,0 +1,31 @@
+incident_id: INC-2025-04-01
+start_time: 2025-04-01T14:03:00Z
+end_time: 2025-04-01T14:57:00Z
+
+timeline:
+  - "14:03 API latency > 3s in eu-west"
+  - "14:05 Alert fired: 'High latency'"
+  - "14:08 Slack: Marco - is it DNS again?"
+  - "14:12 Rollback initiated by deploy-bot"
+  - "14:57 System stabilized"
+
+logs:
+  - "2025-04-01T14:02:54Z api-gateway TimeoutError: Request timed out"
+  - "2025-04-01T14:07:13Z alertmanager Alert triggered: latency > 3s"
+  - "2025-04-01T14:11:41Z deploy-bot INFO: rollback started"
+
+metrics:
+  latency_p95:
+    unit: ms
+    values:
+      - { timestamp: 2025-04-01T14:00:00Z, value: 2400 }
+      - { timestamp: 2025-04-01T14:05:00Z, value: 5200 }
+      - { timestamp: 2025-04-01T14:30:00Z, value: 2900 }
+      - { timestamp: 2025-04-01T14:57:00Z, value: 1400 }
+
+team_comms:
+  platform: slack
+  messages:
+    - { time: "14:08", user: "Marco", message: "is it DNS again?" }
+    - { time: "14:09", user: "Elena", message: "checking API logs" }
+

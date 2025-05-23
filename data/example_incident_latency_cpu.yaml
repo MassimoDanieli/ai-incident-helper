@@ -1,0 +1,40 @@
+incident_id: INC-2025-04-15
+start_time: 2025-04-15T15:45:00Z
+end_time: 2025-04-15T16:30:00Z
+
+timeline:
+  - "15:45 High latency observed in checkout service"
+  - "15:47 Alert fired: 'latency_p99 > 8s'"
+  - "15:50 Slack: Ops - High CPU on payment-worker-2"
+  - "16:00 Manual scale-up initiated"
+  - "16:30 Latency returned to baseline"
+
+logs:
+  - "2025-04-15T15:44:55Z checkout-service WARN: slow response > 9s"
+  - "2025-04-15T15:48:10Z alertmanager Alert fired: latency_p99 > 8s"
+  - "2025-04-15T15:52:22Z metrics-collector CPU warning: 95% usage on worker-2"
+  - "2025-04-15T16:00:01Z autoscaler INFO: new node added to pool"
+
+metrics:
+  latency_p99:
+    unit: ms
+    values:
+      - { timestamp: 2025-04-15T15:40:00Z, value: 6100 }
+      - { timestamp: 2025-04-15T15:45:00Z, value: 9400 }
+      - { timestamp: 2025-04-15T16:00:00Z, value: 6800 }
+      - { timestamp: 2025-04-15T16:30:00Z, value: 2900 }
+
+  cpu_usage_worker2:
+    unit: "%"
+    values:
+      - { timestamp: 2025-04-15T15:40:00Z, value: 72 }
+      - { timestamp: 2025-04-15T15:50:00Z, value: 94 }
+      - { timestamp: 2025-04-15T16:10:00Z, value: 83 }
+      - { timestamp: 2025-04-15T16:30:00Z, value: 49 }
+
+team_comms:
+  platform: slack
+  messages:
+    - { time: "15:50", user: "Ops", message: "High CPU on payment-worker-2" }
+    - { time: "15:55", user: "Ops", message: "Evaluating horizontal scaling" }
+

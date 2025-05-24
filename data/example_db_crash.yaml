@@ -1,35 +1,4 @@
 incident_id: INC-2025-04-22
 start_time: 2025-04-22T18:10:00Z
 end_time: 2025-04-22T19:05:00Z
-
-timeline:
-  - "18:10 DB connections timeout in prod-eu"
-  - "18:12 Alert fired: 'PostgreSQL connection failure'"
-  - "18:15 On-call paged automatically"
-  - "18:20 DBA: Primary node crash confirmed"
-  - "18:35 Failover to standby node completed"
-  - "19:05 Service availability restored (some data loss)"
-
-logs:
-  - "2025-04-22T18:09:55Z api ERROR: could not connect to database"
-  - "2025-04-22T18:12:04Z alertmanager Alert: DB unreachable"
-  - "2025-04-22T18:20:17Z dba NOTE: primary crashed, WAL logs incomplete"
-  - "2025-04-22T18:35:45Z postgres-cluster INFO: promoted standby as new master"
-  - "2025-04-22T19:03:50Z api INFO: reconnect successful"
-
-metrics:
-  db_connection_errors:
-    unit: count
-    values:
-      - { timestamp: 2025-04-22T18:00:00Z, value: 3 }
-      - { timestamp: 2025-04-22T18:10:00Z, value: 78 }
-      - { timestamp: 2025-04-22T18:30:00Z, value: 44 }
-      - { timestamp: 2025-04-22T19:00:00Z, value: 2 }
-
-team_comms:
-  platform: slack
-  messages:
-    - { time: "18:16", user: "DBA", message: "Investigating primary DB crash" }
-    - { time: "18:36", user: "Ops", message: "Failover completed, monitoring" }
-    - { time: "18:50", user: "Product", message: "Client data from last 10 min may be lost" }
-
+...

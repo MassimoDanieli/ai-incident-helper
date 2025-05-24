@@ -1,0 +1,31 @@
+name: Validate YAML files
+
+on:
+  push:
+    paths:
+      - 'data/**/*.yaml'
+      - 'data/**/*.yml'
+  pull_request:
+    paths:
+      - 'data/**/*.yaml'
+      - 'data/**/*.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate all YAML files
+        run: |
+          for file in $(find data -name '*.yaml' -o -name '*.yml'); do
+            echo "Validating $file"
+            python -c "import yaml, sys; yaml.safe_load(open('$file'))" || exit 1
+          done

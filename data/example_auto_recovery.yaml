@@ -1,35 +1,4 @@
 incident_id: INC-2025-04-20
 start_time: 2025-04-20T02:05:00Z
 end_time: 2025-04-20T02:42:00Z
-
-timeline:
-  - "02:05 Increased 5xx errors in frontend service"
-  - "02:07 Alert fired: '5xx > 5%' in EU region"
-  - "02:08 Auto-remediation triggered: restart frontend pods"
-  - "02:10 Health checks failed on 3 pods"
-  - "02:15 Pods restarted successfully"
-  - "02:42 Error rate returned to normal"
-
-logs:
-  - "2025-04-20T02:04:58Z frontend-service ERROR 502 Bad Gateway"
-  - "2025-04-20T02:07:10Z alertmanager Alert fired: 5xx > 5%"
-  - "2025-04-20T02:08:05Z remediation-bot INFO: restarting frontend pods"
-  - "2025-04-20T02:15:30Z kubernetes-controller INFO: new pods ready"
-  - "2025-04-20T02:41:50Z frontend-service INFO: error rate < 1%"
-
-metrics:
-  error_rate_5xx:
-    unit: "%"
-    values:
-      - { timestamp: 2025-04-20T02:00:00Z, value: 1.2 }
-      - { timestamp: 2025-04-20T02:05:00Z, value: 6.8 }
-      - { timestamp: 2025-04-20T02:10:00Z, value: 5.1 }
-      - { timestamp: 2025-04-20T02:30:00Z, value: 2.4 }
-      - { timestamp: 2025-04-20T02:42:00Z, value: 0.7 }
-
-team_comms:
-  platform: slack
-  messages:
-    - { time: "02:09", user: "AutoBot", message: "Remediation triggered for frontend" }
-    - { time: "02:16", user: "Monitoring", message: "Pods stable. Monitoring recovery." }
-
+...

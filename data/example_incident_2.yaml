@@ -1,31 +1,4 @@
 incident_id: INC-2025-04-12
 start_time: 2025-04-12T08:20:00Z
 end_time: 2025-04-12T09:10:00Z
-
-timeline:
-  - "08:20 API errors detected (HTTP 500)"
-  - "08:22 Alert fired: 'Error rate > 10%'"
-  - "08:24 Slack: DevOps - investigating auth service"
-  - "08:40 Rollback deployed to previous stable release"
-  - "09:10 System recovered"
-
-logs:
-  - "2025-04-12T08:19:45Z auth-service 500 Internal Server Error"
-  - "2025-04-12T08:23:00Z alertmanager Alert triggered: error rate > 10%"
-  - "2025-04-12T08:39:50Z deploy-bot Rollback completed"
-
-metrics:
-  error_rate:
-    unit: "%"
-    values:
-      - { timestamp: 2025-04-12T08:15:00Z, value: 5.3 }
-      - { timestamp: 2025-04-12T08:20:00Z, value: 12.7 }
-      - { timestamp: 2025-04-12T08:30:00Z, value: 9.1 }
-      - { timestamp: 2025-04-12T09:10:00Z, value: 2.1 }
-
-team_comms:
-  platform: slack
-  messages:
-    - { time: "08:24", user: "DevOps", message: "investigating auth service" }
-    - { time: "08:26", user: "DevOps", message: "issue in new login module" }
-
+...

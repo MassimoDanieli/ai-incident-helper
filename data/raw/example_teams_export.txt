@@ -1,0 +1,18 @@
+#incident-2026-11-03 — exported from Teams
+
+[09:41] Grafana Alerting: FIRING payments-api 5xx ratio > 5% (eu-west-2)
+[09:42] Priya (on-call): ack, looking
+[09:44] Priya: error spike started ~09:38 per dashboard, all from payments-api v4.12.0, deployed 09:30
+[09:46] Tom: card auths failing for ~30% of checkouts, CS getting calls
+[09:47] Priya: logs show "connection pool exhausted" against ledger-db
+[09:49] Priya: v4.12.0 changed pool size from 50 to 5 (typo in helm values?)
+[09:51] Priya: rolling back payments-api to v4.11.3
+[09:58] Priya: rollback done, 5xx dropping
+[10:04] Tom: checkouts succeeding again, CS confirms
+[10:15] Priya: error ratio back under 0.2% for 15 min, closing as resolved
+[10:20] Tom: posted status page update, incident SEV2
+
+log excerpt:
+2026-11-03T09:38:12Z payments-api ERROR HikariPool-1 - Connection is not available, request timed out after 30000ms
+2026-11-03T09:47:30Z payments-api ERROR pool exhausted (active=5, max=5) user=svc_payments password=hunter2
+2026-11-03T09:58:44Z argo-rollouts INFO payments-api rollback to v4.11.3 complete
